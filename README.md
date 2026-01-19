@@ -48,9 +48,9 @@ python manage.py migrate django_wallets
 
 ```python
 from django.contrib.auth.models import AbstractUser
-from django_wallets.mixins import HasWalletMixin
+from django_wallets.mixins import WalletMixin
 
-class User(HasWalletMixin, AbstractUser):
+class User(WalletMixin, AbstractUser):
     pass
 ```
 
@@ -112,7 +112,7 @@ ExchangeService.exchange(user, 'default', 'savings', 100.00, rate=1.0)
 
 | Mixin | Description |
 |-------|-------------|
-| `HasWalletMixin` | Add wallet capabilities to any model |
+| `WalletMixin` | Add wallet capabilities to any model |
 | `ProductMixin` | Make a model purchasable with wallet |
 
 ### Signals
@@ -140,6 +140,97 @@ DJANGO_WALLETS = {
     'DEFAULT_CURRENCY': 'USD',    # Default currency code
 }
 ```
+
+## 🔧 Customization
+
+django-wallets is designed to be fully customizable. You can extend models, override services, or create custom mixins.
+
+### Custom Wallet Model
+
+Extend the abstract base class to add custom fields:
+
+```python
+# myapp/models.py
+from django_wallets.abstract_models import AbstractWallet
+
+class CustomWallet(AbstractWallet):
+    """Custom wallet with additional fields."""
+    credit_limit = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    is_frozen = models.BooleanField(default=False)
+    
+    class Meta(AbstractWallet.Meta):
+        abstract = False
+        db_table = 'custom_wallet'
+```
+
+### Custom Service
+
+Create a custom service by extending the base class:
+
+```python
+# myapp/services.py
+from django_wallets.services.common import WalletService
+from django_wallets.exceptions import WalletException
+
+class CustomWalletService(WalletService):
+    """Custom service with modified validation."""
+    
+    @classmethod
+    def deposit(cls, wallet, amount, meta=None, confirmed=True):
+        # Custom logic: check if wallet is frozen
+        if hasattr(wallet, 'is_frozen') and wallet.is_frozen:
+            raise WalletException("Wallet is frozen")
+        return super().deposit(wallet, amount, meta, confirmed)
+```
+
+Configure in settings:
+
+```python
+DJANGO_WALLETS = {
+    'WALLET_SERVICE_CLASS': 'myapp.services.CustomWalletService',
+}
+```
+
+### Custom Mixin
+
+Create a custom mixin with additional methods:
+
+```python
+# myapp/mixins.py
+from django_wallets.mixins import WalletMixin
+
+class CustomWalletMixin(WalletMixin):
+    """Mixin with additional wallet methods."""
+    
+    def has_sufficient_funds(self, amount):
+        """Check if wallet has enough balance."""
+        return self.balance >= amount
+    
+    def freeze_wallet(self):
+        """Freeze the default wallet."""
+        self.wallet.is_frozen = True
+        self.wallet.save()
+```
+
+Configure in settings:
+
+```python
+DJANGO_WALLETS = {
+    'WALLET_MIXIN_CLASS': 'myapp.mixins.CustomWalletMixin',
+}
+```
+
+### Available Settings
+
+| Setting | Default | Description |
+|---------|---------|-------------|
+| `TABLE_PREFIX` | `''` | Prefix for database table names |
+| `MATH_SCALE` | `8` | Decimal precision for amounts |
+| `DEFAULT_CURRENCY` | `'USD'` | Default currency code |
+| `WALLET_SERVICE_CLASS` | `'django_wallets.services.common.WalletService'` | Custom wallet service |
+| `TRANSFER_SERVICE_CLASS` | `'django_wallets.services.transfer.TransferService'` | Custom transfer service |
+| `EXCHANGE_SERVICE_CLASS` | `'django_wallets.services.exchange.ExchangeService'` | Custom exchange service |
+| `PURCHASE_SERVICE_CLASS` | `'django_wallets.services.purchase.PurchaseService'` | Custom purchase service |
 
 ## 🧪 Testing
 
