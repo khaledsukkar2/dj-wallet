@@ -3,8 +3,10 @@
 [![PyPI version](https://badge.fury.io/py/django-wallets.svg)](https://badge.fury.io/py/django-wallets)
 [![Python Versions](https://img.shields.io/pypi/pyversions/django-wallets.svg)](https://pypi.org/project/django-wallets/)
 [![Django Versions](https://img.shields.io/pypi/djversions/django-wallets.svg)](https://pypi.org/project/django-wallets/)
-[![License](https://img.shields.io/github/license/yourusername/django-wallets.svg)](https://github.com/yourusername/django-wallets/blob/main/LICENSE)
-[![Tests](https://github.com/yourusername/django-wallets/workflows/Tests/badge.svg)](https://github.com/yourusername/django-wallets/actions)
+[![License](https://img.shields.io/badge/license-MIT-purple)](LICENSE)
+[![Tests](https://github.com/yourusername/django-wallets/workflows/Tests/badge.svg)](https://github.com/khaledsukkar2/django-wallets/actions)
+[![Coverage](https://img.shields.io/badge/coverage-92%25-yellowgreen)](https://github.com/khaledsukkar2/django-wallet/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/khaledsukkar2/django-wallet/)
 
 A **secure**, **flexible**, and **easy-to-use** virtual wallet system for Django applications. Similar to [Laravel Wallet](https://github.com/bavix/laravel-wallet), but for Django!
 
