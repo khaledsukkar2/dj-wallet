@@ -1,5 +1,5 @@
 # django_bavix_wallet/services/purchase.py
-from ..exceptions import ProductEnded
+from ..exceptions import ProductNotAvailable
 from .common import WalletService
 from .transfer import TransferService
 
@@ -11,7 +11,7 @@ class PurchaseService:
         Customer pays for a product.
         """
         if not product.can_buy(customer, quantity):
-            raise ProductEnded("Product is not available.")
+            raise ProductNotAvailable("Product is not available.")
 
         cost = product.get_amount_product(customer) * quantity
         meta = product.get_meta_product()
