@@ -4,7 +4,6 @@ Test models for django_wallets testing.
 These models demonstrate how to integrate django_wallets with your own models.
 """
 
-
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
