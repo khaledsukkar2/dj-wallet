@@ -11,8 +11,8 @@ from django_wallets.models import Transfer
 from django_wallets.services import ExchangeService, WalletService
 
 
-@pytest.mark.django_db
-@pytest.mark.integration
+@pytest.mark.django_db()
+@pytest.mark.integration()
 class TestExchangeWorkflows:
     """Tests for currency exchange workflows."""
 
@@ -24,7 +24,9 @@ class TestExchangeWorkflows:
 
         WalletService.deposit(usd_wallet, Decimal("100.00"))
 
-        ExchangeService.exchange(user, "default", "eur", Decimal("50.00"), rate=Decimal("1.0"))
+        ExchangeService.exchange(
+            user, "default", "eur", Decimal("50.00"), rate=Decimal("1.0")
+        )
 
         usd_wallet.refresh_from_db()
         eur_wallet.refresh_from_db()
@@ -40,7 +42,9 @@ class TestExchangeWorkflows:
         WalletService.deposit(usd_wallet, Decimal("100.00"))
 
         # 100 USD at 0.85 rate = 85 EUR
-        ExchangeService.exchange(user, "default", "eur", Decimal("100.00"), rate=Decimal("0.85"))
+        ExchangeService.exchange(
+            user, "default", "eur", Decimal("100.00"), rate=Decimal("0.85")
+        )
 
         usd_wallet.refresh_from_db()
         eur_wallet.refresh_from_db()
@@ -55,7 +59,9 @@ class TestExchangeWorkflows:
 
         WalletService.deposit(usd_wallet, Decimal("100.00"))
 
-        txn = ExchangeService.exchange(user, "default", "eur", Decimal("50.00"), rate=Decimal("0.92"))
+        txn = ExchangeService.exchange(
+            user, "default", "eur", Decimal("50.00"), rate=Decimal("0.92")
+        )
 
         assert "exchange_rate" in txn.meta
         assert txn.meta["exchange_rate"] == "0.92"
@@ -96,8 +102,8 @@ class TestExchangeWorkflows:
         assert new_wallet.balance == Decimal("50.00")
 
 
-@pytest.mark.django_db
-@pytest.mark.integration
+@pytest.mark.django_db()
+@pytest.mark.integration()
 class TestExchangeValidation:
     """Tests for exchange validation."""
 
