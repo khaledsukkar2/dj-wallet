@@ -9,7 +9,7 @@ from django_wallets.exceptions import (
     BalanceIsEmpty,
     ConfirmedInvalid,
     InsufficientFunds,
-    ProductEnded,
+    ProductNotAvailable,
     WalletException,
     WalletOwnerInvalid,
 )
@@ -25,7 +25,7 @@ class TestExceptionHierarchy:
         assert issubclass(InsufficientFunds, WalletException)
         assert issubclass(ConfirmedInvalid, WalletException)
         assert issubclass(WalletOwnerInvalid, WalletException)
-        assert issubclass(ProductEnded, WalletException)
+        assert issubclass(ProductNotAvailable, WalletException)
 
     def test_all_inherit_from_exception(self):
         """All exceptions should inherit from base Exception."""
@@ -59,8 +59,8 @@ class TestExceptionMessages:
         assert "Required" in str(exc)
 
     def test_product_ended_message(self):
-        """ProductEnded should preserve message."""
-        exc = ProductEnded("Product out of stock")
+        """ProductNotAvailable should preserve message."""
+        exc = ProductNotAvailable("Product out of stock")
         assert "out of stock" in str(exc)
 
 
@@ -93,6 +93,6 @@ class TestExceptionUsage:
             raise WalletOwnerInvalid("test")
 
     def test_product_ended_raised_correctly(self):
-        """ProductEnded should be raisable."""
-        with pytest.raises(ProductEnded):
-            raise ProductEnded("test")
+        """ProductNotAvailable should be raisable."""
+        with pytest.raises(ProductNotAvailable):
+            raise ProductNotAvailable("test")
