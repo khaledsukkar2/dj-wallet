@@ -37,7 +37,25 @@ class WalletOwnerInvalid(WalletException):
     pass
 
 
-class ProductEnded(WalletException):
-    """Raised when a product is out of stock."""
+class ProductNotAvailable(WalletException):
+    """Raised when a product is not available."""
+
+    pass
+
+
+class WalletFrozen(WalletException):
+    """Raised when attempting operations on a frozen wallet."""
+
+    pass
+
+
+class TransactionAlreadyProcessed(WalletException):
+    """Raised when trying to confirm/reject a non-pending transaction."""
+
+    pass
+
+
+class TransactionExpired(WalletException):
+    """Raised when trying to confirm an expired transaction."""
 
     pass
