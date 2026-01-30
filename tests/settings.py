@@ -21,14 +21,14 @@ INSTALLED_APPS = [
 
 DATABASES = {
     "default": {
-        # "ENGINE": "django.db.backends.sqlite3",
-        # "NAME": ":memory:",
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "wallets",
-        "USER": "postgres",
-        "PASSWORD": "123",
-        "HOST": "localhost",
-        "PORT":"5432",
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": ":memory:",
+        # "ENGINE": "django.db.backends.postgresql",
+        # "NAME": "wallets",
+        # "USER": "postgres",
+        # "PASSWORD": "123",
+        # "HOST": "localhost",
+        # "PORT": "5432",
     }
 }
 
@@ -42,7 +42,6 @@ AUTH_USER_MODEL = "test_app.User"
 
 # Django Wallets settings
 DJANGO_WALLETS = {
-    "TABLE_PREFIX": "",
     "MATH_SCALE": 8,
     "DEFAULT_CURRENCY": "USD",
 }
