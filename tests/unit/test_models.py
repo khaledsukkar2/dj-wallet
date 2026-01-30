@@ -15,7 +15,7 @@ from django_wallets.models import Transaction, Transfer
 # ============================================================================
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 class TestWalletModel:
     """Tests for the Wallet model."""
 
@@ -89,7 +89,7 @@ class TestWalletModel:
 # ============================================================================
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 class TestTransactionModel:
     """Tests for the Transaction model."""
 
@@ -107,6 +107,7 @@ class TestTransactionModel:
     def test_transaction_type_withdraw(self, funded_wallet):
         """Withdrawal transaction should have correct type."""
         from django_wallets.services import WalletService
+
         txn = WalletService.withdraw(funded_wallet, Decimal("50.00"))
         assert txn.type == Transaction.TYPE_WITHDRAW
 
@@ -134,6 +135,7 @@ class TestTransactionModel:
     def test_transaction_amount_precision(self, wallet):
         """Transaction should preserve decimal precision."""
         from django_wallets.services import WalletService
+
         txn = WalletService.deposit(wallet, Decimal("123.45678901"))
         assert txn.amount == Decimal("123.45678901")
 
@@ -143,7 +145,7 @@ class TestTransactionModel:
 # ============================================================================
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 class TestTransferModel:
     """Tests for the Transfer model."""
 
@@ -173,10 +175,10 @@ class TestTransferModel:
         t2 = transfer_factory()
         assert t1.uuid != t2.uuid
 
-    def test_transfer_status_paid(self, transfer_factory):
-        """Transfer via TransferService should have status PAID."""
+    def test_transfer_status_transfer(self, transfer_factory):
+        """Transfer via TransferService should have status TRANSFER."""
         transfer = transfer_factory()
-        assert transfer.status == Transfer.STATUS_PAID
+        assert transfer.status == Transfer.STATUS_TRANSFER
 
     def test_transfer_timestamps(self, transfer_factory):
         """Transfer should have timestamps."""
