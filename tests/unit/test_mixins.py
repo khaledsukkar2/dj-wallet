@@ -14,7 +14,7 @@ from django_wallets.exceptions import WalletException
 # ============================================================================
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 class TestWalletMixin:
     """Tests for WalletMixin functionality."""
 
@@ -60,7 +60,9 @@ class TestWalletMixin:
 
     def test_create_wallet_with_meta(self, user):
         """create_wallet should store metadata."""
-        wallet = user.create_wallet("usd", currency="USD", description="US Dollar wallet")
+        wallet = user.create_wallet(
+            "usd", currency="USD", description="US Dollar wallet"
+        )
         assert wallet.meta["currency"] == "USD"
         assert wallet.meta["description"] == "US Dollar wallet"
 
@@ -112,6 +114,7 @@ class TestWalletMixin:
 
     def test_safe_transfer_validates_receiver(self, user):
         """safe_transfer should raise if receiver has no wallet."""
+
         class NoWalletObject:
             pass
 
@@ -145,12 +148,13 @@ class TestWalletMixin:
 # ============================================================================
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 class TestProductMixin:
     """Tests for ProductMixin functionality."""
 
     def test_get_amount_product(self, product):
         """get_amount_product should return product price."""
+
         class FakeCustomer:
             pass
 
@@ -159,6 +163,7 @@ class TestProductMixin:
 
     def test_can_buy_default_true(self, product):
         """can_buy should return True when stock available."""
+
         class FakeCustomer:
             pass
 
@@ -185,7 +190,7 @@ class TestProductMixin:
 # ============================================================================
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 class TestMultiHolderWallets:
     """Tests for wallets on different holder types."""
 
