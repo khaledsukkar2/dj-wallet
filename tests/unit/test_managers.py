@@ -7,7 +7,7 @@ import pytest
 from django_wallets.models import Wallet
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 class TestWalletManager:
     """Tests for WalletManager."""
 
@@ -43,7 +43,7 @@ class TestWalletManager:
         assert result != wallet2
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 class TestTransactionManager:
     """Tests for TransactionManager."""
 
