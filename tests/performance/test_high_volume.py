@@ -11,9 +11,9 @@ from django_wallets.models import Transaction
 from django_wallets.services import WalletService
 
 
-@pytest.mark.django_db
-@pytest.mark.performance
-@pytest.mark.slow
+@pytest.mark.django_db()
+@pytest.mark.performance()
+@pytest.mark.slow()
 class TestHighVolumeDeposits:
     """Tests for high-volume deposit operations."""
 
@@ -47,9 +47,9 @@ class TestHighVolumeDeposits:
         assert throughput >= 10, f"Only {throughput:.1f}/s, expected >= 10/s"
 
 
-@pytest.mark.django_db
-@pytest.mark.performance
-@pytest.mark.slow
+@pytest.mark.django_db()
+@pytest.mark.performance()
+@pytest.mark.slow()
 class TestHighVolumeWithdrawals:
     """Tests for high-volume withdrawal operations."""
 
@@ -72,9 +72,9 @@ class TestHighVolumeWithdrawals:
         assert elapsed < 30, f"Took {elapsed:.2f}s, expected < 30s"
 
 
-@pytest.mark.django_db
-@pytest.mark.performance
-@pytest.mark.slow
+@pytest.mark.django_db()
+@pytest.mark.performance()
+@pytest.mark.slow()
 class TestQueryOptimization:
     """Tests for database query optimization."""
 
