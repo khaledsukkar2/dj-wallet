@@ -9,8 +9,8 @@ import pytest
 from django_wallets.services import WalletService
 
 
-@pytest.mark.django_db
-@pytest.mark.security
+@pytest.mark.django_db()
+@pytest.mark.security()
 class TestWalletOwnership:
     """Tests for wallet ownership enforcement."""
 
@@ -57,8 +57,8 @@ class TestWalletOwnership:
         assert org_wallet.holder_id == org.pk
 
 
-@pytest.mark.django_db
-@pytest.mark.security
+@pytest.mark.django_db()
+@pytest.mark.security()
 class TestWalletIsolation:
     """Tests for wallet isolation between holders."""
 
@@ -78,17 +78,13 @@ class TestWalletIsolation:
 
         # This should find user1's wallet
         found = Wallet.objects.filter(
-            holder_type=ct,
-            holder_id=user1.pk,
-            slug="default"
+            holder_type=ct, holder_id=user1.pk, slug="default"
         ).first()
         assert found == wallet1
 
         # This should NOT find user1's wallet when looking for user2
         not_found = Wallet.objects.filter(
-            holder_type=ct,
-            holder_id=user2.pk,
-            slug="default"
+            holder_type=ct, holder_id=user2.pk, slug="default"
         ).first()
         assert not_found != wallet1 or not_found is None
 
