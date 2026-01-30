@@ -1,4 +1,9 @@
+"""
+Mixins for adding wallet functionality to Django models.
+"""
+
 from django.contrib.contenttypes.models import ContentType
+from django.utils.translation import gettext_lazy as _
 
 from .exceptions import WalletException
 from .models import Wallet
@@ -49,21 +54,33 @@ class WalletMixin:
             holder_type=ct, holder_id=self.pk, slug=slug, meta=meta
         )
 
+    def has_wallet(self, slug="default"):
+        """
+        Check if a specific wallet exists without creating it.
+        """
+        ct = ContentType.objects.get_for_model(self)
+        return Wallet.objects.filter(
+            holder_type=ct, holder_id=self.pk, slug=slug
+        ).exists()
+
     def deposit(self, amount, meta=None, confirmed=True):
         """Proxy to WalletService deposit"""
         from .utils import get_wallet_service
+
         WalletService = get_wallet_service()
         return WalletService.deposit(self.wallet, amount, meta, confirmed)
 
     def withdraw(self, amount, meta=None, confirmed=True):
         """Proxy to WalletService withdraw"""
         from .utils import get_wallet_service
+
         WalletService = get_wallet_service()
         return WalletService.withdraw(self.wallet, amount, meta, confirmed)
 
     def force_withdraw(self, amount, meta=None, confirmed=True):
         """Proxy to WalletService force_withdraw"""
         from .utils import get_wallet_service
+
         WalletService = get_wallet_service()
         return WalletService.force_withdraw(self.wallet, amount, meta, confirmed)
 
@@ -72,6 +89,7 @@ class WalletMixin:
         Transfer funds to another holder.
         """
         from .utils import get_transfer_service
+
         TransferService = get_transfer_service()
         return TransferService.transfer(self, to_holder, amount, meta)
 
@@ -80,7 +98,7 @@ class WalletMixin:
         Transfer with additional checks (e.g. check if receiver exists).
         """
         if not hasattr(to_holder, "wallet"):
-            raise WalletException("Receiver does not have a wallet.")
+            raise WalletException(_("Receiver does not have a wallet."))
         return self.transfer(to_holder, amount, meta)
 
     def pay(self, item):
@@ -88,8 +106,60 @@ class WalletMixin:
         Pay for an item (ProductLimitedInterface).
         """
         from .utils import get_purchase_service
+
         PurchaseService = get_purchase_service()
         return PurchaseService.pay(self, item)
+
+    def freeze_wallet(self, slug="default", reason=""):
+        """
+        Freeze a specific wallet.
+
+        Args:
+            slug: The wallet slug to freeze (default: "default").
+            reason: Optional reason for freezing.
+        """
+        wallet = self.get_wallet(slug)
+        wallet.freeze(reason)
+        return wallet
+
+    def unfreeze_wallet(self, slug="default"):
+        """
+        Unfreeze a specific wallet.
+
+        Args:
+            slug: The wallet slug to unfreeze (default: "default").
+        """
+        wallet = self.get_wallet(slug)
+        wallet.unfreeze()
+        return wallet
+
+    def is_wallet_frozen(self, slug="default"):
+        """
+        Check if a specific wallet is frozen.
+
+        Args:
+            slug: The wallet slug to check (default: "default").
+
+        Returns:
+            bool: True if the wallet is frozen.
+        """
+        return self.get_wallet(slug).is_frozen
+
+    def get_pending_transactions(self, slug="default"):
+        """
+        Get all pending transactions for a specific wallet.
+
+        Args:
+            slug: The wallet slug (default: "default").
+
+        Returns:
+            QuerySet: Pending transactions.
+        """
+        from .models import Transaction
+
+        return self.get_wallet(slug).transactions.filter(
+            status=Transaction.STATUS_PENDING
+        )
 
 
 class ProductMixin:
@@ -104,7 +174,7 @@ class ProductMixin:
 
     def get_amount_product(self, customer):
         """Return the cost of the product for the specific customer."""
-        raise NotImplementedError("Subclasses must implement get_amount_product()")
+        raise NotImplementedError(_("Subclasses must implement get_amount_product()"))
 
     def get_meta_product(self):
         """Return metadata for the transaction."""
@@ -116,7 +186,3 @@ class ProductMixin:
         Can be overridden for inventory logic.
         """
         return True
-
-
-# Backwards compatibility alias
-HasWalletMixin = WalletMixin
