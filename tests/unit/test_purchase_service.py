@@ -8,11 +8,11 @@ from decimal import Decimal
 
 import pytest
 
-from django_wallets.exceptions import InsufficientFunds, ProductEnded
+from django_wallets.exceptions import InsufficientFunds, ProductNotAvailable
 from django_wallets.services import PurchaseService, WalletService
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db()
 class TestPurchaseService:
     """Tests for PurchaseService.pay()."""
 
@@ -29,13 +29,13 @@ class TestPurchaseService:
         assert customer.wallet.balance == Decimal("75.00")
 
     def test_pay_product_out_of_stock(self, user_factory, product_factory):
-        """Purchasing out of stock product should raise ProductEnded."""
+        """Purchasing out of stock product should raise ProductNotAvailable."""
         customer = user_factory()
         product = product_factory(stock=0)
 
         WalletService.deposit(customer.wallet, Decimal("100.00"))
 
-        with pytest.raises(ProductEnded):
+        with pytest.raises(ProductNotAvailable):
             PurchaseService.pay(customer, product)
 
     def test_pay_insufficient_funds(self, user_factory, product_factory):
@@ -60,7 +60,9 @@ class TestPurchaseService:
         customer.wallet.refresh_from_db()
         assert customer.wallet.balance == Decimal("70.00")  # 100 - (10 * 3)
 
-    def test_pay_digital_product_with_wallet(self, user_factory, digital_product_factory):
+    def test_pay_digital_product_with_wallet(
+        self, user_factory, digital_product_factory
+    ):
         """Digital product with wallet should transfer to seller."""
         customer = user_factory()
         product = digital_product_factory(price=Decimal("15.00"))
