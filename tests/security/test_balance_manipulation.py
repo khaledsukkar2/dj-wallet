@@ -10,8 +10,8 @@ from django_wallets.exceptions import AmountInvalid, InsufficientFunds
 from django_wallets.services import WalletService
 
 
-@pytest.mark.django_db
-@pytest.mark.security
+@pytest.mark.django_db()
+@pytest.mark.security()
 class TestNegativeBalancePrevention:
     """Tests for preventing unauthorized negative balances."""
 
@@ -35,8 +35,8 @@ class TestNegativeBalancePrevention:
         assert wallet.balance == Decimal("-50.00")
 
 
-@pytest.mark.django_db
-@pytest.mark.security
+@pytest.mark.django_db()
+@pytest.mark.security()
 class TestAmountManipulation:
     """Tests for preventing amount manipulation."""
 
@@ -75,8 +75,8 @@ class TestAmountManipulation:
         assert wallet.balance == Decimal("0.00000002")
 
 
-@pytest.mark.django_db
-@pytest.mark.security
+@pytest.mark.django_db()
+@pytest.mark.security()
 class TestBalanceConsistency:
     """Tests for balance consistency checks."""
 
@@ -93,12 +93,14 @@ class TestBalanceConsistency:
 
         # Calculate from transactions
         deposits = sum(
-            t.amount for t in wallet.transactions.filter(
+            t.amount
+            for t in wallet.transactions.filter(
                 type=Transaction.TYPE_DEPOSIT, confirmed=True
             )
         )
         withdrawals = sum(
-            t.amount for t in wallet.transactions.filter(
+            t.amount
+            for t in wallet.transactions.filter(
                 type=Transaction.TYPE_WITHDRAW, confirmed=True
             )
         )
