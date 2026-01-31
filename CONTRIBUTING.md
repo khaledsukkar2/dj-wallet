@@ -1,13 +1,13 @@
-# Contributing to Django Wallets
+# Contributing to dj-wallets
 
-Thank you for your interest in contributing to Django Wallets! This document provides guidelines and instructions for contributing.
+Thank you for your interest in contributing to dj-wallets! This document provides guidelines and instructions for contributing.
 
 ## Development Setup
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/django-wallets.git
-   cd django-wallets
+   git clone https://github.com/khaledsukkar2/dj-wallets.git
+   cd dj-wallets
    ```
 
 2. **Create a virtual environment:**
@@ -33,7 +33,7 @@ Thank you for your interest in contributing to Django Wallets! This document pro
 pytest
 
 # Run with coverage
-pytest --cov=django_wallets --cov-report=html
+pytest --cov=dj_wallet --cov-report=html
 
 # Run specific test categories
 pytest -m unit          # Unit tests only
@@ -100,13 +100,13 @@ When reporting issues, please include:
 
 - Python version
 - Django version
-- django-wallets version
+- dj-wallets version
 - Minimal reproducible example
 - Expected vs actual behavior
 
 ## Security Issues
 
-For security vulnerabilities, please **do not** open a public issue. Instead, contact the maintainers directly at security@example.com.
+For security vulnerabilities, please **do not** open a public issue. Instead, contact the maintainers directly at khaled.sukkar.contact@gmail.com.
 
 ## License
 

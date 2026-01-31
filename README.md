@@ -1,12 +1,12 @@
-# Django Wallets
+# dj-wallets
 
-[![PyPI version](https://badge.fury.io/py/django-wallets.svg)](https://badge.fury.io/py/django-wallets)
-[![Python Versions](https://img.shields.io/pypi/pyversions/django-wallets.svg)](https://pypi.org/project/django-wallets/)
-[![Django Versions](https://img.shields.io/pypi/djversions/django-wallets.svg)](https://pypi.org/project/django-wallets/)
+[![PyPI version](https://badge.fury.io/py/dj-wallets.svg)](https://badge.fury.io/py/dj-wallets)
+[![Python Versions](https://img.shields.io/pypi/pyversions/dj-wallets.svg)](https://pypi.org/project/dj-wallets/)
+[![Django Versions](https://img.shields.io/pypi/djversions/dj-wallets.svg)](https://pypi.org/project/dj-wallets/)
 [![License](https://img.shields.io/badge/license-MIT-purple)](LICENSE)
-[![Coverage](https://img.shields.io/badge/coverage-92%25-yellowgreen)](https://github.com/khaledsukkar2/django-wallet/)
+[![Coverage](https://img.shields.io/badge/coverage-92%25-yellowgreen)](https://github.com/khaledsukkar2/django-wallets/)
 [![Code Style: Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/khaledsukkar2/django-wallet/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/khaledsukkar2/django-wallets/)
 
 A **secure**, **flexible**, and **powerful** virtual wallet system for Django applications.
 
@@ -38,7 +38,7 @@ Think of this as a "digital bank account" inside your app. It doesn't handle rea
 ## Installation
 
 ```bash
-pip install django-wallets
+pip install dj-wallet
 ```
 
 Add to your `INSTALLED_APPS`:
@@ -46,7 +46,7 @@ Add to your `INSTALLED_APPS`:
 ```python
 INSTALLED_APPS = [
     # ...
-    'django_wallets',
+    'dj_wallet',
 ]
 ```
 
@@ -65,7 +65,7 @@ Add the `WalletMixin` to your custom User model to give it wallet capabilities.
 
 ```python
 from django.contrib.auth.models import AbstractUser
-from django_wallets.mixins import WalletMixin
+from dj_wallet.mixins import WalletMixin
 
 class User(WalletMixin, AbstractUser):
     pass
@@ -97,7 +97,7 @@ user.transfer(recipient, 50.00)
 To make an item "buyable," just add `ProductMixin` to its model. When a user pays for it, the price is automatically deducted from their wallet.
 
 ```python
-from django_wallets.mixins import ProductMixin
+from dj_wallet.mixins import ProductMixin
 from django.db import models
 
 class DigitalCourse(ProductMixin, models.Model):
@@ -153,7 +153,7 @@ Django Wallets uses a component-based architecture where logic is encapsulated i
 Extend the default models to add custom fields.
 
 ```python
-from django_wallets.abstract_models import AbstractWallet
+from dj_wallet.abstract_models import AbstractWallet
 
 class MyWallet(AbstractWallet):
     tax_exempt = models.BooleanField(default=False)
@@ -164,7 +164,7 @@ class MyWallet(AbstractWallet):
 Override existing logic or add helpers by extending the `WalletMixin`.
 
 ```python
-from django_wallets.mixins import WalletMixin
+from dj_wallet.mixins import WalletMixin
 
 class MyCustomMixin(WalletMixin):
     def deposit(self, amount, meta=None, confirmed=True):
@@ -172,7 +172,7 @@ class MyCustomMixin(WalletMixin):
         return super().deposit(amount, meta, confirmed)
 
 # settings.py
-DJANGO_WALLETS = {
+dj_wallet = {
     'WALLET_MIXIN_CLASS': 'myapp.mixins.MyCustomMixin',
 }
 ```
@@ -181,7 +181,7 @@ DJANGO_WALLETS = {
 Override core business logic by extending the service classes.
 
 ```python
-from django_wallets.services.common import WalletService
+from dj_wallet.services.common import WalletService
 
 class MyWalletService(WalletService):
     @classmethod
@@ -190,7 +190,7 @@ class MyWalletService(WalletService):
         return super().deposit(wallet, amount, **kwargs)
 
 # settings.py
-DJANGO_WALLETS = {
+dj_wallet = {
     'WALLET_SERVICE_CLASS': 'myapp.services.MyWalletService',
 }
 ```
@@ -205,8 +205,9 @@ If you find this project useful, please consider supporting its development.
 Show some love by [starring the project on GitHub](https://github.com/khaledsukkar2/django-wallets)!
 
 ### Sponsorship & Donations
-- **BTC**: `bc1qkj33n08e9k5qndvptpkh3n8jmv058qrv87r9s3`
-- **USDT (TRC20)**: `TTRrG1AnYyqY7zC5tW4m7j5X5zB7GzY5Xz`
+- **BTC**: `13X8aZ23pFNCH2FPW6YpRTw4PGxo7AvFkN`
+- **USDT (TRC20)**: `TEitNDQMm4upYmNvFeMpxTRGEJGdord3S5`
+- **USDT (BEP20)**: `0xc491a2ba6f386ddbf26cdc906939230036473f5d`
 
 ---
 
