@@ -1,5 +1,5 @@
 [run]
-source = src/django_wallets
+source = src/dj_wallet
 branch = True
 omit =
     */tests/*

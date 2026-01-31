@@ -39,7 +39,7 @@ classifiers = [
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-packages = [{include = "django_wallets", from = "src"}]
+packages = [{include = "dj_wallet", from = "src"}]
 
 [tool.poetry.urls]
 Homepage = "https://github.com/khaledsukkar2/django-wallets"
@@ -91,7 +91,7 @@ markers = [
 
 # Coverage configuration
 [tool.coverage.run]
-source = ["src/django_wallets"]
+source = ["src/dj_wallet"]
 branch = true
 omit = [
     "*/tests/*",
@@ -129,7 +129,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["django_wallets"]
+known-first-party = ["dj_wallet"]
 known-third-party = ["django", "rest_framework"]
 
 # Type checking configuration

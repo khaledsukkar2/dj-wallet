@@ -23,7 +23,7 @@ test:
 
 # Run tests with coverage report
 test-cov:
-    poetry run pytest --cov=django_wallets --cov-report=term-missing --cov-report=html
+    poetry run pytest --cov=dj_wallet --cov-report=term-missing --cov-report=html
 
 # Run type checking with mypy
 type-check:
@@ -65,12 +65,12 @@ migrate:
 
 # Print the current version of the package
 version:
-    @$env:PYTHONPATH="src"; poetry run python -c "import django_wallets; print(django_wallets.__version__)"
+    @$env:PYTHONPATH="src"; poetry run python -c "import dj_wallet; print(dj_wallet.__version__)"
 
 # Build the package
 build:
     poetry build
 
-# Release to PyPI
-release:
-    poetry publish --build
+# Release to PyPI using a token
+release token:
+    poetry publish --build --username=__token__ --password={{token}}
