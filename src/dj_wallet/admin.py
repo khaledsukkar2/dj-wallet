@@ -1,4 +1,4 @@
-# django_wallets/admin.py
+# dj_wallet/admin.py
 from django.contrib import admin
 
 from .models import Transaction, Transfer, Wallet

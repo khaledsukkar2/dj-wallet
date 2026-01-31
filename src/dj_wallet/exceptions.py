@@ -1,4 +1,4 @@
-# django_wallets/exceptions.py
+# dj_wallet/exceptions.py
 
 
 class WalletException(Exception):

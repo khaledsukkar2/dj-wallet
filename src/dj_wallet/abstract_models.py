@@ -5,7 +5,7 @@ These abstract models contain all the fields and logic for wallets, transactions
 Developers can extend these to create custom models with additional fields or modified behavior.
 
 Usage:
-    from django_wallets.abstract_models import AbstractWallet
+    from dj_wallet.abstract_models import AbstractWallet
 
     class CustomWallet(AbstractWallet):
         custom_field = models.CharField(max_length=100)
@@ -31,7 +31,7 @@ class AbstractWallet(models.Model):
     Abstract base class for Wallet model.
     Extend this class to create a custom wallet model with additional fields.
     Remember to set ``abstract = False`` in your Meta class and update
-    ``DJANGO_WALLETS['WALLET_MODEL']`` setting.
+    ``dj_wallet['WALLET_MODEL']`` setting.
     """
 
     # The owner of the wallet (User, Organization, etc.)

@@ -119,7 +119,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="transfer_deposit",
-                        to="django_wallets.transaction",
+                        to="dj_wallet.transaction",
                     ),
                 ),
                 (
@@ -143,7 +143,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="transfer_withdraw",
-                        to="django_wallets.transaction",
+                        to="dj_wallet.transaction",
                     ),
                 ),
             ],
@@ -224,7 +224,7 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name="transactions",
-                to="django_wallets.wallet",
+                to="dj_wallet.wallet",
             ),
         ),
     ]

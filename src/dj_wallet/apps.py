@@ -1,5 +1,5 @@
 """
-Django app configuration for django_wallets.
+Django app configuration for dj_wallet.
 """
 
 from django.apps import AppConfig
@@ -8,7 +8,7 @@ from django.apps import AppConfig
 class DjangoWalletsConfig(AppConfig):
     """Configuration for the Django Wallets application."""
 
-    name = "django_wallets"
+    name = "dj_wallet"
     verbose_name = "Django Wallets"
     default_auto_field = "django.db.models.BigAutoField"
 

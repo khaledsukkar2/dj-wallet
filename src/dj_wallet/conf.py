@@ -1,7 +1,7 @@
 """
-Configuration settings for django_wallets.
+Configuration settings for dj_wallet.
 
-Settings can be overridden in your Django settings.py using the DJANGO_WALLETS dictionary.
+Settings can be overridden in your Django settings.py using the dj_wallet dictionary.
 """
 
 from dataclasses import dataclass
@@ -13,7 +13,7 @@ from django.core.exceptions import ImproperlyConfigured
 
 @dataclass
 class WalletSettings:
-    """Settings container for django_wallets configuration."""
+    """Settings container for dj_wallet configuration."""
 
     # Number of decimal places for wallet balance calculations
     WALLET_MATH_SCALE: int = 8
@@ -22,10 +22,10 @@ class WalletSettings:
     WALLET_DEFAULT_CURRENCY: str = "USD"
 
     # Swappable service classes - use dotted path strings
-    WALLET_SERVICE_CLASS: str = "django_wallets.services.common.WalletService"
-    TRANSFER_SERVICE_CLASS: str = "django_wallets.services.transfer.TransferService"
-    EXCHANGE_SERVICE_CLASS: str = "django_wallets.services.exchange.ExchangeService"
-    PURCHASE_SERVICE_CLASS: str = "django_wallets.services.purchase.PurchaseService"
+    WALLET_SERVICE_CLASS: str = "dj_wallet.services.common.WalletService"
+    TRANSFER_SERVICE_CLASS: str = "dj_wallet.services.transfer.TransferService"
+    EXCHANGE_SERVICE_CLASS: str = "dj_wallet.services.exchange.ExchangeService"
+    PURCHASE_SERVICE_CLASS: str = "dj_wallet.services.purchase.PurchaseService"
 
     # Transaction expiration settings
     PENDING_TRANSACTION_EXPIRY_HOURS: int = (
@@ -34,7 +34,7 @@ class WalletSettings:
 
     def __init__(self):
         """Initialize settings from Django settings if available."""
-        user_settings = getattr(django_settings, "DJANGO_WALLETS", {})
+        user_settings = getattr(django_settings, "dj_wallet", {})
 
         for key, _ in self.__class__.__dataclass_fields__.items():
             # Map user setting keys (without WALLET_ prefix) to our attributes
@@ -56,13 +56,13 @@ class WalletSettings:
         # Validate MATH_SCALE
         if not isinstance(self.WALLET_MATH_SCALE, int) or self.WALLET_MATH_SCALE < 0:
             raise ImproperlyConfigured(
-                "DJANGO_WALLETS['MATH_SCALE'] must be a non-negative integer. "
+                "dj_wallet['MATH_SCALE'] must be a non-negative integer. "
                 f"Got: {self.WALLET_MATH_SCALE}"
             )
 
         if self.WALLET_MATH_SCALE > 30:
             raise ImproperlyConfigured(
-                "DJANGO_WALLETS['MATH_SCALE'] must be at most 30. "
+                "dj_wallet['MATH_SCALE'] must be at most 30. "
                 f"Got: {self.WALLET_MATH_SCALE}"
             )
 
@@ -72,7 +72,7 @@ class WalletSettings:
             or len(self.WALLET_DEFAULT_CURRENCY) == 0
         ):
             raise ImproperlyConfigured(
-                "DJANGO_WALLETS['DEFAULT_CURRENCY'] must be a non-empty string. "
+                "dj_wallet['DEFAULT_CURRENCY'] must be a non-empty string. "
                 f"Got: {self.WALLET_DEFAULT_CURRENCY}"
             )
 
@@ -87,7 +87,7 @@ class WalletSettings:
         for name, value in service_classes:
             if not isinstance(value, str) or "." not in value:
                 raise ImproperlyConfigured(
-                    f"DJANGO_WALLETS['{name}'] must be a valid dotted path string. "
+                    f"dj_wallet['{name}'] must be a valid dotted path string. "
                     f"Got: {value}"
                 )
 
@@ -97,7 +97,7 @@ class WalletSettings:
             or self.PENDING_TRANSACTION_EXPIRY_HOURS < 1
         ):
             raise ImproperlyConfigured(
-                "DJANGO_WALLETS['PENDING_TRANSACTION_EXPIRY_HOURS'] must be a positive integer. "
+                "dj_wallet['PENDING_TRANSACTION_EXPIRY_HOURS'] must be a positive integer. "
                 f"Got: {self.PENDING_TRANSACTION_EXPIRY_HOURS}"
             )
 
