@@ -1,8 +1,8 @@
 # dj-wallets
 
-[![PyPI version](https://badge.fury.io/py/dj-wallets.svg)](https://badge.fury.io/py/dj-wallets)
-[![Python Versions](https://img.shields.io/pypi/pyversions/dj-wallets.svg)](https://pypi.org/project/dj-wallet/)
-[![Django Versions](https://img.shields.io/pypi/djversions/dj-wallets.svg)](https://pypi.org/project/dj-wallet/)
+[![PyPI version](https://badge.fury.io/py/dj-wallet.svg)](https://badge.fury.io/py/dj-wallet)
+[![Python Versions](https://img.shields.io/pypi/pyversions/dj-wallet.svg)](https://pypi.org/project/dj-wallet/)
+[![Django Versions](https://img.shields.io/pypi/djversions/dj-wallet.svg)](https://pypi.org/project/dj-wallet/)
 [![License](https://img.shields.io/badge/license-MIT-purple)](LICENSE)
 [![Coverage](https://img.shields.io/badge/coverage-92%25-yellowgreen)](https://github.com/khaledsukkar2/dj-wallet)
 [![Code Style: Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
